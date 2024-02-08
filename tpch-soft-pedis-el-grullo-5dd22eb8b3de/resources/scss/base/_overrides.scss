@@ -1,0 +1,85 @@
+div:where(.swal2-container).swal2-backdrop-show, div:where(.swal2-container).swal2-noanimation{
+    backdrop-filter: blur(32px);
+}
+
+div:where(.swal2-container).swal2-center>.swal2-popup{
+    border-radius: 16px!important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled){
+    border: none!important;
+    font-size: inherit!important;
+    font-family: inherit!important;
+    padding: 16px 20px!important;
+    border-radius: 12px!important;
+    outline: none!important;
+    font-weight: bold!important;
+    color: var(--white)!important;
+    transition: all 0.1s!important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
+    background: var(--primary)!important;
+    border-bottom: solid 6px var(--primary-dark)!important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel{
+    background: var(--gray)!important;
+    border-bottom: solid 6px var(--gray-dark)!important;
+}
+
+body.swal2-toast-shown .swal2-container{
+    backdrop-filter: none!important;
+}
+
+.swal2-popup.swal2-toast{
+    box-shadow: 0 16px 16px rgba(0, 0, 0, 0.1) !important;
+    border: solid 2px var(--primary);
+    border-radius: 12px;
+}
+
+div:where(.swal2-icon).swal2-warning{
+    border-color: var(--yellow)!important;
+    background-color: var(--yellow)!important;
+    color: var(--white)!important;
+}
+
+div:where(.swal2-icon).swal2-info{
+    border-color: var(--blue)!important;
+    background-color: var(--blue)!important;
+    color: var(--white)!important;
+}
+
+div:where(.swal2-icon).swal2-question{
+    border-color: var(--gray-dark)!important;
+    background-color: var(--gray-dark)!important;
+    color: var(--white)!important;
+}
+
+div:where(.swal2-icon).swal2-error{
+    border-color: var(--red)!important;
+    background-color: var(--red)!important;
+    color: var(--white)!important;
+}
+
+
+div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{
+    background-color: var(--white)!important;
+}
+
+div:where(.swal2-icon).swal2-success{
+    border-color: var(--green)!important;
+    background-color: var(--green)!important;
+    color: var(--white)!important;
+}
+
+div:where(.swal2-icon).swal2-success .swal2-success-ring{
+    background-color: var(--green)!important;
+    border: 0.25em solid var(--green)!important;
+}
+
+div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{
+    background-color: var(--white)!important;
+    z-index: 3!important;
+}
+

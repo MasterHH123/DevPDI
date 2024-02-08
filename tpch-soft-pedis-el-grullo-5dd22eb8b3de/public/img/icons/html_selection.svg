@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512" height="512" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24">
+  <g fill="#fff" stroke="#99c7e8">
+    <rect width="5" height="5" x="2.5" y="2.5" data-original="#ffffff" rx=".5"/>
+    <rect width="5" height="5" x="2.5" y="9.5" data-original="#ffffff" rx=".5"/>
+    <rect width="5" height="5" x="2.5" y="16.5" data-original="#ffffff" rx=".5"/>
+  </g>
+  <rect width="12" height="2" x="10" y="4" fill="#96a2ab" data-original="#96a2ab" opacity=".6" rx="1"/>
+  <rect width="12" height="2" x="10" y="11" fill="#96a2ab" data-original="#96a2ab" opacity=".6" rx="1"/>
+  <rect width="12" height="2" x="10" y="18" fill="#96a2ab" data-original="#96a2ab" opacity=".6" rx="1"/>
+  <path fill="#fff" stroke="#004577" stroke-linecap="round" stroke-linejoin="round" d="m3.5 5 1 1 2-2" data-original="#000000"/>
+</svg>

@@ -1,0 +1,67 @@
+citizen
+    - id
+    - username
+    - email
+    - password
+    - status
+    - first_name
+    - last_name
+    - second_last_name
+    - avatar
+    - curp
+    - address_street
+    - address_number
+    - address_suburb
+    - address_municipality
+    - address_province
+    - address_zipcode
+    - phone
+    - mobile
+    - created_at
+    - updated_at
+
+proceeding_templates
+    - id
+    - name
+    - description
+    - created_at
+    - updated_at
+    - deleted_at
+
+proceeding_template_fields
+    - id
+    - proceeding_template_id
+    - label
+    - description
+    - placeholder
+    - input_type
+    - is_required
+    - is_disabled
+    - is_read_only
+    - max_value
+    - min_value
+    - def_value
+    - option_values
+    - ajax_source
+    - created_at
+    - updated_at
+    - deleted_at
+
+proceeding_records
+    - id
+    - proceeding_template_id
+    - citizen_id
+    - user_id
+    - notes
+    - created_at
+    - updated_at
+    - deleted_at
+
+proceeding_record_field_entries
+    - id
+    - proceeding_record_id
+    - proceeding_template_field_id
+    - field_value
+    - created_at
+    - updated_at
+    - deleted_at

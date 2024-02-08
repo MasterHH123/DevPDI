@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512" height="512" style="enable-background:new 0 0 512 512" viewBox="0 0 64 64">
+  <path fill="#f8d4ff" d="M48 14v45c0 .554-.444 1-1 1H9c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1h29z" data-original="#fab400"/>
+  <path fill="#a01aa3" d="M48 29.76v8.48L37.78 48.46l-4.46 1.49c-.78.26-1.53-.49-1.27-1.27l.78-2.34.71-2.12zM48 16H38a2 2 0 0 1-2-2V4h2.003L48 13.98z" data-original="#dc9600"/>
+  <path fill="#f8d4ff" d="M48 14h-9a1 1 0 0 1-1-1V4z" data-original="#fab400"/>
+  <path fill="#fff" d="M43 30H13a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h30a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1z" data-original="#f0f0f0"/>
+  <path fill="#00143c" d="M28.785 18H13a1 1 0 0 0 0 2h15.785a1 1 0 0 0 0-2zm0-6H13a1 1 0 0 0 0 2h15.785a1 1 0 0 0 0-2z" data-original="#00143c"/>
+  <path fill="#fff" d="m39.76 36-6.43 6.43-.52 1.57H13c-.55 0-1-.45-1-1v-6c0-.55.45-1 1-1z" data-original="#f0f0f0"/>
+  <path fill="#e18bff" d="M52.59 31.66 37.57 46.67l-4.24-4.24 15.01-15.02z" data-original="#0a5078"/>
+  <path fill="#ffde8b" d="m37.57 46.67-4.47 1.49a.995.995 0 0 1-1.26-1.26l.97-2.9.52-1.57z" data-original="#f2c8a0"/>
+  <path fill="#00143c" d="m35.448 47.38-2.345.782a1 1 0 0 1-1.265-1.265l.782-2.345z" data-original="#00143c"/>
+  <path fill="#c236c5" d="M55.414 26 54 24.586a2 2 0 0 0-2.828 0L49.757 26 54 30.243l1.414-1.414a2 2 0 0 0 0-2.829zm-5.659 2.821 1.414 1.414L36.155 45.25l-1.414-1.414z" data-original="#c80a50"/>
+  <path fill="#ffde8b" d="m49.756 25.992 4.242 4.242-1.414 1.414-4.242-4.242z" data-original="#f2c8a0"/>
+  <path fill="#00143c" d="M28.785 32H13a1 1 0 0 0 0 2h15.785a1 1 0 0 0 0-2zm0 16H13a1 1 0 0 0 0 2h15.785a1 1 0 0 0 0-2z" data-original="#00143c"/>
+</svg>

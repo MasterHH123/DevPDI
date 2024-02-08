@@ -1,0 +1,41 @@
+:root{
+    --primary: #9C21AF;
+    --primary-dark: #86099a;
+    --primary-light: #a664b0;
+    --primary-dimmed: #d2a6d9;
+    --primary-vanished: #fce7ff;
+    
+    --background: #fafafe;
+
+    --white: #fff;
+    --black: #000;
+    --gray: #6177A4;
+    --gray-light: #97a9ce;
+    --gray-dark: #3f5b94;
+    --dimmed: #f8f8ff;
+    --vanished: #eaeaea;
+
+    --red: #E91E63;
+    --red-dark: #880E4F;
+    --green: #689F38;
+    --green-dark: #33691E;
+    --blue: #03A9F4;
+    --blue-dark: #0277BD;
+    --yellow: #FFC107;
+    --yellow-dark: #FFA000;
+    --yellow-light: #FFE082;
+
+    --head-font: 'Montserrat', sans-serif;
+    --body-font: 'Mulish', sans-serif;
+    --body-font-color: #1e1e1e;
+    --font-size: 16px;
+    --font-size-xs: 10px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 18px;
+    --font-size-xl: 22px;
+    --font-size-xxl: 26px;
+    --font-size-xxxl: 32px;
+    --font-size-xxxxl: 48px;
+    --max-width-desktop: 1200px;
+}

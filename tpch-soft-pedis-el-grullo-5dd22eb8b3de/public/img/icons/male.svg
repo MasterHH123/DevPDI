@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512" height="512" style="enable-background:new 0 0 512 512" viewBox="0 0 64 64">
+  <path fill="#fab400" d="M20 32h24v28H20z" data-original="#fab400"/>
+  <path fill="#f0c8a0" d="M12 48h8v12h-8zm32 0h8v12h-8z" data-original="#f0c8a0"/>
+  <path fill="#dc9600" d="M20 48V32a8 8 0 0 0-8 8v8zm32 0v-8a8 8 0 0 0-8-8v16z" data-original="#dc9600"/>
+  <path fill="#f0f0f0" d="M38 32a6 6 0 1 1-12 0z" data-original="#f0f0f0"/>
+  <path fill="#d2aa82" d="M28 26v6a4 4 0 0 0 8 0v-6z" data-original="#d2aa82"/>
+  <path fill="#0a5078" d="M36 6h-8a6 6 0 0 0-6 6v6h20v-6a6 6 0 0 0-6-6z" data-original="#0a5078"/>
+  <path fill="#f0c8a0" d="M34 30h-4a8 8 0 0 1-8-8v-4a2 2 0 0 0 2-2v-4h16v4a2 2 0 0 0 2 2v4a8 8 0 0 1-8 8z" data-original="#f0c8a0"/>
+  <path fill="#d2aa82" d="M22 22v-6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2zm20 0v-6a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2zM12 48h8v1h-8zm32 0h8v1h-8z" data-original="#d2aa82"/>
+  <path fill="#0a5078" d="M38 12H24V8a4 4 0 0 1 4-4h10a4 4 0 0 1 0 8z" data-original="#0a5078"/>
+  <path fill="#f0f0f0" d="M12 46h8v2h-8zm32 0h8v2h-8z" data-original="#f0f0f0"/>
+</svg>
