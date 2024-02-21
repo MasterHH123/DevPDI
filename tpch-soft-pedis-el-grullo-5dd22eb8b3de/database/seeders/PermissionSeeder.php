@@ -46,7 +46,8 @@ class PermissionSeeder extends Seeder
                 'users.work_shifts' => 'Gestionar turnos',
             ],
             ['Ubicaciones de ciudadanos' => [
-                'locations.show' => 'Ver'
+                'locations.show' => 'Ver',
+                'locations.store' => 'Registrar'
                 ]
             ],
             'Regristro de actividad' => [

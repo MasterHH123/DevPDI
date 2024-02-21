@@ -54,7 +54,7 @@ onMounted(() => {
 
     function fetchLocations(){
         //testing purposes
-        fetch(`${process.env.APP_NAME}/locations`).then(response => {
+        fetch(`/locations`).then(response => {
             if(!response.ok) {
                 throw new Error('There was an error');
             }

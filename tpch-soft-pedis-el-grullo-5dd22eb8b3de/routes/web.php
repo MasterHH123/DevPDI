@@ -15,6 +15,7 @@ use App\Http\Controllers\ProceedingController;
 use App\Http\Controllers\ProceedingRecordController;
 use App\Http\Controllers\ProceedingTemplateController;
 use App\Http\Controllers\CitizenController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\AppLogController;
 
 /*
@@ -53,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/citizens', CitizenController::class);
     Route::patch('/citizens/{id}/restore', [CitizenController::class, 'restore']);
-    
+
     Route::resource('/proceedings', ProceedingController::class);
     Route::patch('/proceedings/{id}/restore', [ProceedingController::class, 'restore']);
     Route::patch('/proceedings/{id}/open', [ProceedingController::class, 'open']);
@@ -64,6 +65,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/proceeding-templates', ProceedingTemplateController::class);
     Route::patch('/proceeding-templates/{id}/restore', [ProceedingTemplateController::class, 'restore']);
+
+    //Mapbox API
+    Route::resource('/locations', LocationController::class);
+    Route::get('/locations/{id}/show', [LocationController::class, 'show']);
 
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions_list');
     Route::get('/app-logs', [AppLogController::class, 'index']);

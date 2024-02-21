@@ -3,57 +3,71 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Citizen;
 use App\Helpers\AppLogger;
+use DB;
 use App\Models\Location;
 
 
 class LocationController extends Controller
 {
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        $incomingData = $request->input('data');
+
+        $gpsData = json_decode($incomingData, true);
+
+        if(!$gpsData) {
+            return response()->json([
+                'message' => 'Invalid or missing GPS data.'
+            ], 422);
+        }
+
+        $validatedData = validator($gpsData, [
+            'citizen_id' => 'required|exists:citizens,id',
+            'latitude' => 'required|numeric',
+            'latitude_direction' => 'required|in:N,S',
+            'longitude' => 'required|numeric',
+            'longitude_direction' => 'required|in:E,W',
+            'date' => 'required|date_format:dmy',
+            'time' => 'required|date_format:His',
+            'altitude' => 'required|numeric',
+            'speed' => 'required|numeric',
+            'course' => 'required|numeric',
+            'time_interval' => 'sometimes|numeric'
+        ])->validate();
+
+        $did_succeed = false;
+        $created = null;
+        $error_msg = '';
+
         try
         {
-            $host = getenv('SERVER_IP');
-            $port = getenv('SERVER_PORT');
+            DB::beginTransaction();
 
-            $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-            if(!$socket){
-                throw new \Exception("Failed to create socket");
-            }
-            $connectResult = socket_connect($socket, $host, $port);
-            if(!$connectResult){
+            $created = Location::create($validatedData);
 
-                throw new \Exception("Failed to connect to socket");
-            }
+            AppLogger::log(
+                "Ubicacion registrada",
+                ['id' => $created->id]
+            );
 
-            $coordinatesData = socket_read($socket, 1024);
-            if($coordinatesData === false){
-                throw new \Exception("Failed to read data from server");
-            }
-
-            socket_close($socket);
-
-            $decodedCoordinatesData = json_decode($coordinatesData, true);
-
-            print $decodedCoordinatesData;
-
-            if($decodedCoordinatesData !== null){
-                Location::create($decodedCoordinatesData);
-
-                AppLogger::log("Ubicación de ciudadano agregado", $decodedCoordinatesData);
-            } else {
-                return response()->json([
-                    'message' => 'Invalid data received'
-                ], 400);
-            }
-        } catch (\Exception $ex){
+            DB::commit();
+            $did_succeed = true;
+        } catch(\ErrorException $ex) {
+            DB::rollback();
+            $error_msg = $ex->getMessage();
+        } catch(\Exception $ex) {
+            DB::rollback();
+            $error_msg = $ex->getMessage();
+        } catch(QueryException $ex) {
+            DB::rollback();
             $error_msg = $ex->getMessage();
         }
+
         return response()->json([
-            'message' => 'Location received and stored',
-            'data' => $decodedCoordinatesData
-        ]);
+            'success' => $did_succeed,
+            'message' => $did_succeed ? 'Ubicacion registrada con exito!' : $error_msg,
+            'data' => $created
+        ], $did_succeed ? 201 : 500);
     }
 
     public function show(Request $request){

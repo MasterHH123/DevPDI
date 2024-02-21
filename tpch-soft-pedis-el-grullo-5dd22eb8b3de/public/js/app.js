@@ -4383,7 +4383,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_global_viewTitle_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/global/viewTitle.vue */ "./resources/js/components/global/viewTitle.vue");
 /* harmony import */ var _components_global_DynamicMenu_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/global/DynamicMenu.vue */ "./resources/js/components/global/DynamicMenu.vue");
 /* harmony import */ var _components_citizens_Table_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/citizens/Table.vue */ "./resources/js/components/citizens/Table.vue");
-/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 
 
 
@@ -4434,7 +4433,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       function fetchLocations() {
         //testing purposes
-        fetch("".concat(process.env.APP_NAME, "/locations")).then(function (response) {
+        fetch("/locations").then(function (response) {
           if (!response.ok) {
             throw new Error('There was an error');
           }
