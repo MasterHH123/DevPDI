@@ -2,6 +2,7 @@
 import { onMounted, ref} from "vue";
 import mapboxgl from 'mapbox-gl';
 import viewTitle from "../components/global/viewTitle.vue";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import dynamicMenu from "../components/global/DynamicMenu.vue";
 import citizensTable from "../components/citizens/Table.vue";
 
@@ -15,25 +16,28 @@ console.log(mapboxgl.accessToken);
 */
 const mapContainer = ref(null);
 const Markers = [];
+
 onMounted(() => {
     const map = new mapboxgl.Map({
         container: mapContainer.value, //container ID
         style: 'mapbox://styles/mapbox/streets-v12', //style URL
-        center: [-74.5, 40], //starting position
+        center: [-104.21805, 19.80603], //starting position
         zoom: 9 //inital zoom
     })
 
-    //gotta fetch the data boy
     fetchLocations();
 
-    function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
-        const Marker = new mapboxgl.Marker().setLngLat([latitude, longitude]).addTo(map.value);
+    function addMarkers(citizen_id, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
+        //const citizen = citizens.find(c => c.id === citizen_id);
+        console.log('Latitude: ' + longitude_direction, 'Longitude: ' + latitude_direction);
+        const Marker = new mapboxgl.Marker().setLngLat([longitude_direction, latitude_direction]).addTo(map.value);
 
         Markers.push(Marker);
 
         const popupInfo = `
         <div>
             <h4>Detalles</h4>
+            <!--<p>Ciudadano: ${citizen.first_name}, ${citizen.last_name}</p>-->
             <p>Direccion de latitud: ${latitude_direction}</p>
             <p>Direccion de longitud: ${longitude_direction}</p>
             <p>Altitud: ${altitude}</p>
@@ -54,7 +58,7 @@ onMounted(() => {
 
     function fetchLocations(){
         //testing purposes
-        fetch(`/locations`).then(response => {
+        fetch(`http://localhost:8000/api/locations`).then(response => {
             if(!response.ok) {
                 throw new Error('There was an error');
             }

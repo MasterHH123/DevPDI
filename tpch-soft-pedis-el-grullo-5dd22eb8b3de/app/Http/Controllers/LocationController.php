@@ -6,34 +6,49 @@ use Illuminate\Http\Request;
 use App\Helpers\AppLogger;
 use DB;
 use App\Models\Location;
-
+use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
+    public function index(){
+
+        $locations = Location::all();
+
+        return response()->json($locations);
+    }
+
     public function store(Request $request){
         $incomingData = $request->input('data');
 
-        $gpsData = json_decode($incomingData, true);
-
-        if(!$gpsData) {
+        \Log::info(print_r($incomingData, true));
+        if(!$incomingData) {
             return response()->json([
                 'message' => 'Invalid or missing GPS data.'
             ], 422);
         }
 
-        $validatedData = validator($gpsData, [
+        //Transform date and time format from dmy to ymd and His.0 to His respectively
+        $date = \Carbon\Carbon::createFromFormat('dmy', $incomingData['date'])->format('Y-m-d');
+        $time = \Carbon\Carbon::createFromFormat('His',substr($incomingData['time'], 0, 6))->format('H:i:s');
+
+        $incomingData['date'] = $date;
+        $incomingData['time'] = $time;
+
+        $locationStructure = [
             'citizen_id' => 'required|exists:citizens,id',
             'latitude' => 'required|numeric',
             'latitude_direction' => 'required|in:N,S',
             'longitude' => 'required|numeric',
             'longitude_direction' => 'required|in:E,W',
-            'date' => 'required|date_format:dmy',
-            'time' => 'required|date_format:His',
+            'date' => 'required|date_format:Y-m-d',
+            'time' => 'required|date_format:H:i:s',
             'altitude' => 'required|numeric',
             'speed' => 'required|numeric',
             'course' => 'required|numeric',
             'time_interval' => 'sometimes|numeric'
-        ])->validate();
+        ];
+
+        $validatedData = validator($incomingData, $locationStructure)->validate();
 
         $did_succeed = false;
         $created = null;
@@ -71,10 +86,13 @@ class LocationController extends Controller
     }
 
     public function show(Request $request){
+        #use eloquent to load citizen data
         $location = Location::query()
-            ->select('latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')
-            ->groupBy('citizen_id')
+            ->select('citizen_id', 'latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')
+            ->groupBy('citizen_id', 'latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')
             ->get();
+
+        \Log::info(print_r($location, true));
 
         if(!$location){
             return response() -> json([

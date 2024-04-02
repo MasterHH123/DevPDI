@@ -19,3 +19,6 @@ use App\Http\Controllers\LocationController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//VPS post
+Route::post('/locations', [LocationController::class, 'store']);
