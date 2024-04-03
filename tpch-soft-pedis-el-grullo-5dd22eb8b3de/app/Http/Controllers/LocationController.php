@@ -10,6 +10,19 @@ use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
+    /*
+    private function convertDMG($coordinate, $direction){
+        $degree = substr($coordinate, 0, -7);
+        $minute = substr($coordinate, -7, -5);
+        $seconds = substr($coordinate, -5, -2);
+
+        $decimalDegrees = $degree + ($minute/60) + ($seconds/3600);
+
+        return ($direction == 'S' || $direction == 'W') ? -$decimalDegrees : $decimalDegrees;
+    }
+    */
+
+
     public function index(){
 
         $locations = Location::all();
@@ -27,6 +40,13 @@ class LocationController extends Controller
             ], 422);
         }
 
+        //Convert coordinates from DMS to DD
+        //MOVED TO FRONTEND FOR CONVERSION
+
+        //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9.
+        /*$latitude = $this->convertDMG($incomingData['latitude'], $incomingData['latitude_direction']);
+        $longitude = $this->convertDMG($incomingData['longitude'], $incomingData['longitude_direction']);
+        */
         //Transform date and time format from dmy to ymd and His.0 to His respectively
         $date = \Carbon\Carbon::createFromFormat('dmy', $incomingData['date'])->format('Y-m-d');
         $time = \Carbon\Carbon::createFromFormat('His',substr($incomingData['time'], 0, 6))->format('H:i:s');
@@ -36,9 +56,9 @@ class LocationController extends Controller
 
         $locationStructure = [
             'citizen_id' => 'required|exists:citizens,id',
-            'latitude' => 'required|numeric',
+            'latitude' => 'required|between:0,99999.999999',
             'latitude_direction' => 'required|in:N,S',
-            'longitude' => 'required|numeric',
+            'longitude' => 'required|between:0,99999.999999',
             'longitude_direction' => 'required|in:E,W',
             'date' => 'required|date_format:Y-m-d',
             'time' => 'required|date_format:H:i:s',
@@ -49,6 +69,7 @@ class LocationController extends Controller
         ];
 
         $validatedData = validator($incomingData, $locationStructure)->validate();
+        $existingLocation = Location::where('citizen_id', $incomingData['citizen_id'])->first();
 
         $did_succeed = false;
         $created = null;
@@ -58,7 +79,12 @@ class LocationController extends Controller
         {
             DB::beginTransaction();
 
-            $created = Location::create($validatedData);
+            if($existingLocation) {
+                $existingLocation->update($validatedData);
+                $created = $existingLocation;
+            } else {
+                $created = Location::create($validatedData);
+            }
 
             AppLogger::log(
                 "Ubicacion registrada",

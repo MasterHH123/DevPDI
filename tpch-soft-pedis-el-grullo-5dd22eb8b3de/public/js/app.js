@@ -4414,10 +4414,12 @@ __webpack_require__.r(__webpack_exports__);
         zoom: 9 //inital zoom
       });
       fetchLocations();
-      function addMarkers(citizen_id, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude) {
+      //addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
+
+      function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude) {
         //const citizen = citizens.find(c => c.id === citizen_id);
-        console.log('Latitude: ' + longitude_direction, 'Longitude: ' + latitude_direction);
-        var Marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)().setLngLat([longitude_direction, latitude_direction]).addTo(map.value);
+        console.log('Latitude: ', latitude, 'Longitude: ', longitude);
+        var Marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)().setLngLat([latitude, longitude]).addTo(map.value);
         Markers.push(Marker);
         var popupInfo = "\n        <div>\n            <h4>Detalles</h4>\n            <!--<p>Ciudadano: ".concat(citizen.first_name, ", ").concat(citizen.last_name, "</p>-->\n            <p>Direccion de latitud: ").concat(latitude_direction, "</p>\n            <p>Direccion de longitud: ").concat(longitude_direction, "</p>\n            <p>Altitud: ").concat(altitude, "</p>\n            <p>Fecha: ").concat(date, "</p>\n            <p>Tiempo: ").concat(time, "</p>\n       </div>\n        ");
 
@@ -4444,7 +4446,7 @@ __webpack_require__.r(__webpack_exports__);
           //clear any existing markers
           clearMarkers();
           locations.forEach(function (location) {
-            addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude, location.date, location.time);
+            addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
           });
         })["catch"](function (error) {
           console.error('There was an error fetching the data', error);

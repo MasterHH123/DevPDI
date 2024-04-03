@@ -26,11 +26,16 @@ onMounted(() => {
     })
 
     fetchLocations();
+    //addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
 
-    function addMarkers(citizen_id, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
+    function convertDMGToDD() {
+
+    }
+
+    function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
         //const citizen = citizens.find(c => c.id === citizen_id);
-        console.log('Latitude: ' + longitude_direction, 'Longitude: ' + latitude_direction);
-        const Marker = new mapboxgl.Marker().setLngLat([longitude_direction, latitude_direction]).addTo(map.value);
+        console.log('Latitude: ', latitude, 'Longitude: ', longitude);
+        const Marker = new mapboxgl.Marker().setLngLat([latitude, longitude]).addTo(map.value);
 
         Markers.push(Marker);
 
@@ -67,7 +72,7 @@ onMounted(() => {
             //clear any existing markers
             clearMarkers();
             locations.forEach(location => {
-                addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
+                addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
             });
         }).catch(error => {
             console.error('There was an error fetching the data', error);
