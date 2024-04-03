@@ -43,7 +43,7 @@ class LocationController extends Controller
         //Convert coordinates from DMS to DD
         //MOVED TO FRONTEND FOR CONVERSION
 
-        //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9.
+        //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9
         /*$latitude = $this->convertDMG($incomingData['latitude'], $incomingData['latitude_direction']);
         $longitude = $this->convertDMG($incomingData['longitude'], $incomingData['longitude_direction']);
         */

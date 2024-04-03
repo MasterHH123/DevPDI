@@ -4415,18 +4415,39 @@ __webpack_require__.r(__webpack_exports__);
       });
       fetchLocations();
       //addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
+      //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9
 
+      function convertDMSToDD(coord, direction) {
+        console.log('Initial coordinates', coord);
+        var degrees, minutes, seconds;
+        if (coord.length !== 12) {
+          degrees = coord.substring(0, 2);
+          minutes = coord.substring(2, 4);
+          seconds = coord.substring(5, 10);
+        } else {
+          degrees = coord.substring(0, 3);
+          minutes = coord.substring(3, 5);
+          seconds = coord.substring(6, 11);
+        }
+        console.log('Degrees, minutes, seconds', [degrees, minutes, seconds]);
+        var decimal = parseFloat(degrees) + (parseFloat(minutes) / 60 + parseFloat(seconds) / 3600);
+        console.log('Converted degrees', decimal);
+        return direction === 'N' || direction === 'E' ? decimal : -decimal;
+      }
       function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude) {
         //const citizen = citizens.find(c => c.id === citizen_id);
-        console.log('Latitude: ', latitude, 'Longitude: ', longitude);
-        var Marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)().setLngLat([latitude, longitude]).addTo(map.value);
+        var latitudeD = convertDMSToDD(latitude, latitude_direction);
+        var longitudeD = convertDMSToDD(longitude, longitude_direction);
+        console.log('Date', date);
+        console.log('Latitude: ', latitudeD, 'Longitude: ', longitudeD);
+        var Marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)().setLngLat([longitudeD, latitudeD]).addTo(map);
         Markers.push(Marker);
-        var popupInfo = "\n        <div>\n            <h4>Detalles</h4>\n            <!--<p>Ciudadano: ".concat(citizen.first_name, ", ").concat(citizen.last_name, "</p>-->\n            <p>Direccion de latitud: ").concat(latitude_direction, "</p>\n            <p>Direccion de longitud: ").concat(longitude_direction, "</p>\n            <p>Altitud: ").concat(altitude, "</p>\n            <p>Fecha: ").concat(date, "</p>\n            <p>Tiempo: ").concat(time, "</p>\n       </div>\n        ");
+        var popupInfo = "\n        <div>\n            <h4>Detalles</h4>\n            <p>Direccion de latitud: ".concat(latitude_direction, "</p>\n            <p>Direccion de longitud: ").concat(longitude_direction, "</p>\n            <p>Altitud: ").concat(altitude, "</p>\n            <p>Fecha: ").concat(date, "</p>\n            <p>Tiempo: ").concat(time, "</p>\n       </div>\n        ");
 
         //creates a popup for each marker
         var popup = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Popup)({
           offset: 25
-        }).setHTML(popupInfo);
+        }).setHTML(popupInfo).addTo(map);
         Marker.setPopup(popup);
       }
       function clearMarkers() {
@@ -4447,6 +4468,7 @@ __webpack_require__.r(__webpack_exports__);
           clearMarkers();
           locations.forEach(function (location) {
             addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
+            console.log('Code reaches here.');
           });
         })["catch"](function (error) {
           console.error('There was an error fetching the data', error);

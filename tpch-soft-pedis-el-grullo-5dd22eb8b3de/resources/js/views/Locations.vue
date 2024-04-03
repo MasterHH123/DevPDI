@@ -27,22 +27,40 @@ onMounted(() => {
 
     fetchLocations();
     //addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
+    //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9
 
-    function convertDMGToDD() {
-
+    function convertDMSToDD(coord, direction) {
+        console.log('Initial coordinates', coord);
+        let degrees, minutes, seconds;
+        if(coord.length !== 12){
+            degrees = coord.substring(0,2);
+            minutes = coord.substring(2, 4);
+            seconds = coord.substring(5,10);
+        } else {
+            degrees = coord.substring(0,3);
+            minutes = coord.substring(3,5);
+            seconds = coord.substring(6,11);
+        }
+        console.log('Degrees, minutes, seconds', [degrees, minutes, seconds])
+        const decimal = parseFloat(degrees) + ((parseFloat(minutes)/60) + (parseFloat(seconds)/3600));
+        console.log('Converted degrees', decimal);
+        return direction === 'N' || direction === 'E' ? decimal : -decimal;
     }
 
     function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
         //const citizen = citizens.find(c => c.id === citizen_id);
-        console.log('Latitude: ', latitude, 'Longitude: ', longitude);
-        const Marker = new mapboxgl.Marker().setLngLat([latitude, longitude]).addTo(map.value);
+        const latitudeD = convertDMSToDD(latitude, latitude_direction);
+        const longitudeD = convertDMSToDD(longitude, longitude_direction);
+
+        console.log('Date', date);
+        console.log('Latitude: ', latitudeD, 'Longitude: ', longitudeD);
+        const Marker = new mapboxgl.Marker().setLngLat([longitudeD, latitudeD]).addTo(map);
 
         Markers.push(Marker);
 
         const popupInfo = `
         <div>
             <h4>Detalles</h4>
-            <!--<p>Ciudadano: ${citizen.first_name}, ${citizen.last_name}</p>-->
             <p>Direccion de latitud: ${latitude_direction}</p>
             <p>Direccion de longitud: ${longitude_direction}</p>
             <p>Altitud: ${altitude}</p>
@@ -52,7 +70,7 @@ onMounted(() => {
         `;
 
         //creates a popup for each marker
-        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupInfo);
+        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupInfo).addTo(map);
         Marker.setPopup(popup);
     }
 
@@ -73,6 +91,7 @@ onMounted(() => {
             clearMarkers();
             locations.forEach(location => {
                 addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
+                console.log('Code reaches here.');
             });
         }).catch(error => {
             console.error('There was an error fetching the data', error);
