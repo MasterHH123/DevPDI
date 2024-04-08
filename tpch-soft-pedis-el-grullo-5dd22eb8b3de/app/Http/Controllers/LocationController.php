@@ -40,13 +40,6 @@ class LocationController extends Controller
             ], 422);
         }
 
-        //Convert coordinates from DMS to DD
-        //MOVED TO FRONTEND FOR CONVERSION
-
-        //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9
-        /*$latitude = $this->convertDMG($incomingData['latitude'], $incomingData['latitude_direction']);
-        $longitude = $this->convertDMG($incomingData['longitude'], $incomingData['longitude_direction']);
-        */
         //Transform date and time format from dmy to ymd and His.0 to His respectively
         $date = \Carbon\Carbon::createFromFormat('dmy', $incomingData['date'])->format('Y-m-d');
         $time = \Carbon\Carbon::createFromFormat('His',substr($incomingData['time'], 0, 6))->format('H:i:s');
@@ -112,7 +105,7 @@ class LocationController extends Controller
     }
 
     public function show(Request $request){
-        #use eloquent to load citizen data
+        #useDB::table('citizens') to join the query and get citizen's name and last name
         $location = Location::query()
             ->select('citizen_id', 'latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')
             ->groupBy('citizen_id', 'latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')

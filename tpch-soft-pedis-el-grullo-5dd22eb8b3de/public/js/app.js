@@ -4419,18 +4419,17 @@ __webpack_require__.r(__webpack_exports__);
 
       function convertDMSToDD(coord, direction) {
         console.log('Initial coordinates', coord);
-        var degrees, minutes, seconds;
+        //minutes2 being whatever is after the decimal point
+        var degrees, minutes;
         if (coord.length !== 12) {
           degrees = coord.substring(0, 2);
-          minutes = coord.substring(2, 4);
-          seconds = coord.substring(5, 10);
+          minutes = coord.substring(2, 10);
         } else {
           degrees = coord.substring(0, 3);
-          minutes = coord.substring(3, 5);
-          seconds = coord.substring(6, 11);
+          minutes = coord.substring(3, 11);
         }
-        console.log('Degrees, minutes, seconds', [degrees, minutes, seconds]);
-        var decimal = parseFloat(degrees) + (parseFloat(minutes) / 60 + parseFloat(seconds) / 3600);
+        console.log('Degrees, minutes', [degrees, minutes]);
+        var decimal = parseFloat(degrees) + parseFloat(minutes) / 60;
         console.log('Converted degrees', decimal);
         return direction === 'N' || direction === 'E' ? decimal : -decimal;
       }
