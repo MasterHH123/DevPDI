@@ -3,17 +3,9 @@ import { onMounted, ref} from "vue";
 import mapboxgl from 'mapbox-gl';
 import viewTitle from "../components/global/viewTitle.vue";
 import 'mapbox-gl/dist/mapbox-gl.css';
-import dynamicMenu from "../components/global/DynamicMenu.vue";
-import citizensTable from "../components/citizens/Table.vue";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWRjZWxwYXoiLCJhIjoiY2xyOGs3enp2Mnd3YzJrcGUzeHk1OG8xOSJ9.O_zRARvjs4jRF3qMzFdZ3A';
-/*mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN;
-    Don't understand why it isn't working like this.
-*/
-/*
-console.log(process.env.VUE_APP_MAPBOX_TOKEN);
-console.log(mapboxgl.accessToken);
-*/
+
 const mapContainer = ref(null);
 const Markers = [];
 
@@ -26,28 +18,21 @@ onMounted(() => {
     })
 
     fetchLocations();
-    //addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
-    //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9
 
     function convertDMSToDD(coord, direction) {
-        console.log('Initial coordinates', coord);
-        //minutes2 being whatever is after the decimal point
         let degrees, minutes;
         if(coord.length !== 12){
             degrees = coord.substring(0,2);
             minutes = coord.substring(2,10)
         } else {
-            degrees = coord.substring(0,3);
-            minutes = coord.substring(3,11);
+            degrees = coord.substring(0, 3);
+            minutes = coord.substring(3, 11);
         }
-        console.log('Degrees, minutes', [degrees, minutes])
         const decimal = parseFloat(degrees) + ((parseFloat(minutes)/60));
-        console.log('Converted degrees', decimal);
         return direction === 'N' || direction === 'E' ? decimal : -decimal;
     }
 
-    function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
-        //const citizen = citizens.find(c => c.id === citizen_id);
+    function addMarkers(first_name, last_name, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude){
         const latitudeD = convertDMSToDD(latitude, latitude_direction);
         const longitudeD = convertDMSToDD(longitude, longitude_direction);
 
@@ -60,6 +45,8 @@ onMounted(() => {
         const popupInfo = `
         <div>
             <h4>Detalles</h4>
+            <p>Nombre: ${first_name}</p>
+            <p>Apellido: ${last_name}</p>
             <p>Direccion de latitud: ${latitude_direction}</p>
             <p>Direccion de longitud: ${longitude_direction}</p>
             <p>Altitud: ${altitude}</p>
@@ -89,7 +76,7 @@ onMounted(() => {
             //clear any existing markers
             clearMarkers();
             locations.forEach(location => {
-                addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
+                addMarkers(location.first_name, location.last_name, location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
                 console.log('Code reaches here.');
             });
         }).catch(error => {

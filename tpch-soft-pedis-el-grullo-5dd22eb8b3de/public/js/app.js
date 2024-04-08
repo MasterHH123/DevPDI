@@ -4433,7 +4433,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log('Converted degrees', decimal);
         return direction === 'N' || direction === 'E' ? decimal : -decimal;
       }
-      function addMarkers(latitude, latitude_direction, longitude, longitude_direction, date, time, altitude) {
+      function addMarkers(first_name, last_name, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude) {
         //const citizen = citizens.find(c => c.id === citizen_id);
         var latitudeD = convertDMSToDD(latitude, latitude_direction);
         var longitudeD = convertDMSToDD(longitude, longitude_direction);
@@ -4441,7 +4441,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log('Latitude: ', latitudeD, 'Longitude: ', longitudeD);
         var Marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)().setLngLat([longitudeD, latitudeD]).addTo(map);
         Markers.push(Marker);
-        var popupInfo = "\n        <div>\n            <h4>Detalles</h4>\n            <p>Direccion de latitud: ".concat(latitude_direction, "</p>\n            <p>Direccion de longitud: ").concat(longitude_direction, "</p>\n            <p>Altitud: ").concat(altitude, "</p>\n            <p>Fecha: ").concat(date, "</p>\n            <p>Tiempo: ").concat(time, "</p>\n       </div>\n        ");
+        var popupInfo = "\n        <div>\n            <h4>Detalles</h4>\n            <p>Nombre: ".concat(first_name, "</p>\n            <p>Apellido: ").concat(last_name, "</p>\n            <p>Direccion de latitud: ").concat(latitude_direction, "</p>\n            <p>Direccion de longitud: ").concat(longitude_direction, "</p>\n            <p>Altitud: ").concat(altitude, "</p>\n            <p>Fecha: ").concat(date, "</p>\n            <p>Tiempo: ").concat(time, "</p>\n       </div>\n        ");
 
         //creates a popup for each marker
         var popup = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Popup)({
@@ -4466,7 +4466,8 @@ __webpack_require__.r(__webpack_exports__);
           //clear any existing markers
           clearMarkers();
           locations.forEach(function (location) {
-            addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
+            //(first_name, last_name, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude)
+            addMarkers(location.first_name, location.last_name, location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
             console.log('Code reaches here.');
           });
         })["catch"](function (error) {

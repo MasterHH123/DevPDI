@@ -66,10 +66,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/proceeding-templates', ProceedingTemplateController::class);
     Route::patch('/proceeding-templates/{id}/restore', [ProceedingTemplateController::class, 'restore']);
 
-    //Mapbox API
-    Route::middleware('cors')->get('/api/locations', [LocationController::class, 'show']);
-
-
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions_list');
     Route::get('/app-logs', [AppLogController::class, 'index']);
 });
+
+//Mapbox API
+Route::middleware('cors')->get('/api/locations', [LocationController::class, 'show']);

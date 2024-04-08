@@ -10,19 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
-    /*
-    private function convertDMG($coordinate, $direction){
-        $degree = substr($coordinate, 0, -7);
-        $minute = substr($coordinate, -7, -5);
-        $seconds = substr($coordinate, -5, -2);
-
-        $decimalDegrees = $degree + ($minute/60) + ($seconds/3600);
-
-        return ($direction == 'S' || $direction == 'W') ? -$decimalDegrees : $decimalDegrees;
-    }
-    */
-
-
     public function index(){
 
         $locations = Location::all();
@@ -105,20 +92,19 @@ class LocationController extends Controller
     }
 
     public function show(Request $request){
-        #useDB::table('citizens') to join the query and get citizen's name and last name
-        $location = Location::query()
-            ->select('citizen_id', 'latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')
-            ->groupBy('citizen_id', 'latitude', 'latitude_direction', 'longitude', 'longitude_direction', 'time', 'altitude')
+        $locationJoinCitizen = DB::table('locations')
+            ->leftJoin('citizens', 'locations.citizen_id', '=', 'citizens.id')
+            ->select('citizens.first_name', 'citizens.last_name' ,'locations.latitude', 'locations.latitude_direction', 'locations.longitude', 'locations.longitude_direction', 'locations.date', 'locations.time', 'locations.altitude')
             ->get();
 
-        \Log::info(print_r($location, true));
+        #\Log::info(print_r($locationJoinCitizen, true));
 
-        if(!$location){
+        if(!$locationJoinCitizen){
             return response() -> json([
                 'error' => 'Location not found', 404
             ]);
         } else {
-            return response() -> json($location);
+            return response() -> json($locationJoinCitizen);
         }
     }
 
