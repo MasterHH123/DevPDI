@@ -4377,15 +4377,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var mapbox_gl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mapbox-gl */ "./node_modules/mapbox-gl/dist/mapbox-gl.js");
 /* harmony import */ var mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mapbox_gl__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_global_viewTitle_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/global/viewTitle.vue */ "./resources/js/components/global/viewTitle.vue");
 /* harmony import */ var mapbox_gl_dist_mapbox_gl_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mapbox-gl/dist/mapbox-gl.css */ "./node_modules/mapbox-gl/dist/mapbox-gl.css");
-/* harmony import */ var _components_global_DynamicMenu_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/global/DynamicMenu.vue */ "./resources/js/components/global/DynamicMenu.vue");
-/* harmony import */ var _components_citizens_Table_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/citizens/Table.vue */ "./resources/js/components/citizens/Table.vue");
-
-
 
 
 
@@ -4394,16 +4390,9 @@ __webpack_require__.r(__webpack_exports__);
   __name: 'Locations',
   setup: function setup(__props) {
     (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().accessToken) = 'pk.eyJ1IjoiYWRjZWxwYXoiLCJhIjoiY2xyOGs3enp2Mnd3YzJrcGUzeHk1OG8xOSJ9.O_zRARvjs4jRF3qMzFdZ3A';
-    /*mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN;
-        Don't understand why it isn't working like this.
-    */
-    /*
-    console.log(process.env.VUE_APP_MAPBOX_TOKEN);
-    console.log(mapboxgl.accessToken);
-    */
-    var mapContainer = (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)(null);
+    var mapContainer = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)(null);
     var Markers = [];
-    (0,vue__WEBPACK_IMPORTED_MODULE_5__.onMounted)(function () {
+    (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
       var map = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Map)({
         container: mapContainer.value,
         //container ID
@@ -4414,12 +4403,7 @@ __webpack_require__.r(__webpack_exports__);
         zoom: 9 //inital zoom
       });
       fetchLocations();
-      //addMarkers(location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.altitude,location.date, location.time);
-      //2042.890847,N,10320.551640,W,170124,213338.0,1514.9,0.0,217.9
-
       function convertDMSToDD(coord, direction) {
-        console.log('Initial coordinates', coord);
-        //minutes2 being whatever is after the decimal point
         var degrees, minutes;
         if (coord.length !== 12) {
           degrees = coord.substring(0, 2);
@@ -4428,17 +4412,12 @@ __webpack_require__.r(__webpack_exports__);
           degrees = coord.substring(0, 3);
           minutes = coord.substring(3, 11);
         }
-        console.log('Degrees, minutes', [degrees, minutes]);
         var decimal = parseFloat(degrees) + parseFloat(minutes) / 60;
-        console.log('Converted degrees', decimal);
         return direction === 'N' || direction === 'E' ? decimal : -decimal;
       }
       function addMarkers(first_name, last_name, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude) {
-        //const citizen = citizens.find(c => c.id === citizen_id);
         var latitudeD = convertDMSToDD(latitude, latitude_direction);
         var longitudeD = convertDMSToDD(longitude, longitude_direction);
-        console.log('Date', date);
-        console.log('Latitude: ', latitudeD, 'Longitude: ', longitudeD);
         var Marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)().setLngLat([longitudeD, latitudeD]).addTo(map);
         Markers.push(Marker);
         var popupInfo = "\n        <div>\n            <h4>Detalles</h4>\n            <p>Nombre: ".concat(first_name, "</p>\n            <p>Apellido: ").concat(last_name, "</p>\n            <p>Direccion de latitud: ").concat(latitude_direction, "</p>\n            <p>Direccion de longitud: ").concat(longitude_direction, "</p>\n            <p>Altitud: ").concat(altitude, "</p>\n            <p>Fecha: ").concat(date, "</p>\n            <p>Tiempo: ").concat(time, "</p>\n       </div>\n        ");
@@ -4466,9 +4445,7 @@ __webpack_require__.r(__webpack_exports__);
           //clear any existing markers
           clearMarkers();
           locations.forEach(function (location) {
-            //(first_name, last_name, latitude, latitude_direction, longitude, longitude_direction, date, time, altitude)
             addMarkers(location.first_name, location.last_name, location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
-            console.log('Code reaches here.');
           });
         })["catch"](function (error) {
           console.error('There was an error fetching the data', error);

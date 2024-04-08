@@ -36,8 +36,6 @@ onMounted(() => {
         const latitudeD = convertDMSToDD(latitude, latitude_direction);
         const longitudeD = convertDMSToDD(longitude, longitude_direction);
 
-        console.log('Date', date);
-        console.log('Latitude: ', latitudeD, 'Longitude: ', longitudeD);
         const Marker = new mapboxgl.Marker().setLngLat([longitudeD, latitudeD]).addTo(map);
 
         Markers.push(Marker);
@@ -77,7 +75,6 @@ onMounted(() => {
             clearMarkers();
             locations.forEach(location => {
                 addMarkers(location.first_name, location.last_name, location.latitude, location.latitude_direction, location.longitude, location.longitude_direction, location.date, location.time, location.altitude);
-                console.log('Code reaches here.');
             });
         }).catch(error => {
             console.error('There was an error fetching the data', error);
