@@ -65,7 +65,8 @@ onMounted(() => {
 
     function fetchLocations(){
         //testing purposes
-        fetch(`http://localhost:8000/api/locations`).then(response => {
+        //CHANGE WHEN IN LOCAL
+        fetch(`https://pdiseguridadtemp.com/api/locations`).then(response => {
             if(!response.ok) {
                 throw new Error('There was an error');
             }

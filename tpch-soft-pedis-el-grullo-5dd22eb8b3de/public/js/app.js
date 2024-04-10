@@ -4436,7 +4436,8 @@ __webpack_require__.r(__webpack_exports__);
       }
       function fetchLocations() {
         //testing purposes
-        fetch("http://localhost:8000/api/locations").then(function (response) {
+        //CHANGE WHEN IN LOCAL
+        fetch("https://pdiseguridadtemp.com/api/locations").then(function (response) {
           if (!response.ok) {
             throw new Error('There was an error');
           }
@@ -16451,7 +16452,7 @@ module.exports = function (list, options) {
 /***/ (function(module) {
 
 /*!
-* sweetalert2 v11.10.4
+* sweetalert2 v11.10.7
 * Released under the MIT License.
 */
 (function (global, factory) {
@@ -16459,8 +16460,18 @@ module.exports = function (list, options) {
   0;
 })(this, (function () { 'use strict';
 
+  function _assertClassBrand(e, t, n) {
+    if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n;
+    throw new TypeError("Private element is not present on this object");
+  }
   function _callSuper(t, o, e) {
     return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
+  }
+  function _classPrivateFieldGet2(s, a) {
+    return s.get(_assertClassBrand(s, a));
+  }
+  function _classPrivateFieldSet2(s, a, r) {
+    return s.set(_assertClassBrand(s, a), r), r;
   }
   function _construct(t, e, r) {
     if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments);
@@ -16648,37 +16659,6 @@ module.exports = function (list, options) {
   }
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  function _classPrivateFieldGet(receiver, privateMap) {
-    var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get");
-    return _classApplyDescriptorGet(receiver, descriptor);
-  }
-  function _classPrivateFieldSet(receiver, privateMap, value) {
-    var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set");
-    _classApplyDescriptorSet(receiver, descriptor, value);
-    return value;
-  }
-  function _classExtractFieldDescriptor(receiver, privateMap, action) {
-    if (!privateMap.has(receiver)) {
-      throw new TypeError("attempted to " + action + " private field on non-instance");
-    }
-    return privateMap.get(receiver);
-  }
-  function _classApplyDescriptorGet(receiver, descriptor) {
-    if (descriptor.get) {
-      return descriptor.get.call(receiver);
-    }
-    return descriptor.value;
-  }
-  function _classApplyDescriptorSet(receiver, descriptor, value) {
-    if (descriptor.set) {
-      descriptor.set.call(receiver, value);
-    } else {
-      if (!descriptor.writable) {
-        throw new TypeError("attempted to set read only private field");
-      }
-      descriptor.value = value;
-    }
   }
   function _checkPrivateRedeclaration(obj, privateCollection) {
     if (privateCollection.has(obj)) {
@@ -18722,9 +18702,10 @@ module.exports = function (list, options) {
   // reader’s list of elements (headings, form controls, landmarks, etc.) in the document.
 
   var setAriaHidden = function setAriaHidden() {
+    var container = getContainer();
     var bodyChildren = Array.from(document.body.children);
     bodyChildren.forEach(function (el) {
-      if (el === getContainer() || el.contains(getContainer())) {
+      if (el.contains(container)) {
         return;
       }
       if (el.hasAttribute('aria-hidden')) {
@@ -19408,7 +19389,7 @@ module.exports = function (list, options) {
       handleInputValidator(instance, inputValue, type);
     } else if (input && !input.checkValidity()) {
       instance.enableButtons();
-      instance.showValidationMessage(innerParams.validationMessage);
+      instance.showValidationMessage(innerParams.validationMessage || input.validationMessage);
     } else if (type === 'deny') {
       deny(instance, inputValue);
     } else {
@@ -20710,7 +20691,7 @@ module.exports = function (list, options) {
      * @returns {Promise<string | void>}
      */
     email: function email(string, validationMessage) {
-      return /^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]{2,24}$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || 'Invalid email address');
+      return /^[a-zA-Z0-9.+_'-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || 'Invalid email address');
     },
     /**
      * @param {string} string
@@ -20784,10 +20765,7 @@ module.exports = function (list, options) {
       /**
        * @type {Promise<SweetAlertResult>}
        */
-      _classPrivateFieldInitSpec(this, _promise, {
-        writable: true,
-        value: void 0
-      });
+      _classPrivateFieldInitSpec(this, _promise, void 0);
       // Prevent run in Node env
       if (typeof window === 'undefined') {
         return;
@@ -20805,7 +20783,7 @@ module.exports = function (list, options) {
 
       /** @type {boolean} */
       this.isAwaitingPromise = false;
-      _classPrivateFieldSet(this, _promise, this._main(currentInstance.params));
+      _classPrivateFieldSet2(_promise, this, this._main(currentInstance.params));
     }
     _createClass(SweetAlert, [{
       key: "_main",
@@ -20848,12 +20826,12 @@ module.exports = function (list, options) {
     }, {
       key: "then",
       value: function then(onFulfilled) {
-        return _classPrivateFieldGet(this, _promise).then(onFulfilled);
+        return _classPrivateFieldGet2(_promise, this).then(onFulfilled);
       }
     }, {
       key: "finally",
       value: function _finally(onFinally) {
-        return _classPrivateFieldGet(this, _promise)["finally"](onFinally);
+        return _classPrivateFieldGet2(_promise, this)["finally"](onFinally);
       }
     }]);
     return SweetAlert;
@@ -21072,7 +21050,7 @@ module.exports = function (list, options) {
     };
   });
   SweetAlert.DismissReason = DismissReason;
-  SweetAlert.version = '11.10.4';
+  SweetAlert.version = '11.10.7';
 
   var Swal = SweetAlert;
   // @ts-ignore
