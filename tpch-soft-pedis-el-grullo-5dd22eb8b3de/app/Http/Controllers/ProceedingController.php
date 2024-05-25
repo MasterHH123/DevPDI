@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proceeding;
 use App\Helpers\AppLogger;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DB;
 
 class ProceedingController extends Controller
@@ -17,7 +18,7 @@ class ProceedingController extends Controller
             $filters            = json_decode($request->filters);
             $pagination         = json_decode($request->pagination);
             $term               = $filters->term;
-            
+
             $records = Proceeding::with([
                 'citizen'
             ])
@@ -96,7 +97,7 @@ class ProceedingController extends Controller
         try
         {
             DB::beginTransaction();
-            
+
             // Create Records
             $created = Proceeding::create([
                 'citizen_id'    => $request->citizen_id,
@@ -142,7 +143,7 @@ class ProceedingController extends Controller
         try
         {
             DB::beginTransaction();
-            
+
             // Create Records
             $proceeding = Proceeding::find($id);
             if( !$proceeding )
@@ -190,7 +191,7 @@ class ProceedingController extends Controller
         ->first();
 
         $term = $request->term;
-        
+
         if( !$proceeding )
             return response()->json([
                 'success'   => false,
@@ -200,7 +201,7 @@ class ProceedingController extends Controller
         if( $request->with_proceeding_records == 1){
 
             $logged_user = $request->user();
-            
+
             // Add citizen proceeding records
             $proceeding->records = $proceeding
             ->records()
@@ -227,12 +228,12 @@ class ProceedingController extends Controller
                 });
             })
             ->when(true, function($q)use($logged_user){
-                
+
                 if( !$logged_user->is_admin )
                 {
                     $q->WhereHas('proceedingTemplate', function($sq)use($logged_user){
                         $sq->whereIn(
-                            'work_shift_id', 
+                            'work_shift_id',
                             $logged_user->workShifts->pluck('id')->toArray()
                         );
                     });
@@ -240,6 +241,77 @@ class ProceedingController extends Controller
             })
             ->simplePaginate(10)
             ->withQueryString();
+        }
+
+        return response()->json([
+            'success'   => true,
+            'data'      => $proceeding,
+        ]);
+    }
+
+    public function showExpiringCases(Request $request, $id)
+    {
+        $proceeding = Proceeding::withTrashed()
+            ->with('citizen')
+            ->where('id', $id)
+            ->first();
+
+        $term = $request->term;
+
+        if( !$proceeding )
+            return response()->json([
+                'success'   => false,
+                'message'   => "El expediente #{$id} no existe!"
+            ], 404);
+
+        if( $request->with_proceeding_records == 1){
+
+            $logged_user = $request->user();
+
+            // Add citizen proceeding records
+            $proceeding->records = $proceeding
+                ->records()
+                ->withTrashed()
+                ->with([
+                    'citizen',
+                    'proceedingTemplate',
+                    'user'
+                ])
+                ->orderBy('id', 'desc')
+                ->where(function ($query) {
+                    $query->where('description', 'like', '%TIEMPO: 60 DÍAS%')
+                        ->orWhere('description', 'like', '%TIEMPO: 30 DÍAS%')
+                        ->orWhere('description', 'like', '%TIEMPO: 15 DÍAS%');
+                })
+                ->when($term, function($q)use($term){
+                    $q->where(function($sq)use($term){
+                        $sq->whereHas('proceedingTemplate', function($ssq)use($term){
+                            $ssq->where('name', 'like', "%{$term}%")
+                                ->orWhere('description', 'like', "%{$term}%");
+                        })
+                            ->orWhereHas('user', function($ssq)use($term){
+                                $ssq->where('first_name', 'like', "%{$term}%")
+                                    ->orWhere('last_name', 'like', "%{$term}%")
+                                    ->orWhere('second_last_name', 'like', "%{$term}%")
+                                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$term}%"])
+                                    ->orWhereRaw("CONCAT(first_name, ' ', last_name, ' ', second_last_name) LIKE ?", ["%{$term}%"]);
+                            });
+                    });
+                })
+                ->when(true, function($q)use($logged_user){
+
+                    if( !$logged_user->is_admin )
+                    {
+                        $q->WhereHas('proceedingTemplate', function($sq)use($logged_user){
+                            $sq->whereIn(
+                                'work_shift_id',
+                                $logged_user->workShifts->pluck('id')->toArray()
+                            );
+                        });
+                    }
+                })
+                ->simplePaginate(10)
+                ->withQueryString();
         }
 
         return response()->json([
@@ -340,7 +412,7 @@ class ProceedingController extends Controller
             $record->update([
                 'status' => 'Cerrado',
             ]);
-    
+
             AppLogger::log(
                 "Expediente #{$id} cerrado",
                 $record,

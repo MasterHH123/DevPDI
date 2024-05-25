@@ -17,13 +17,13 @@
             <div class="col-6">
                 <div class="card bg-red pointer animated">
                     <h1 class="text-xxxxl m-auto">
-                        🚨 {{stats.data.proceedings.total}}<!-- less than 15 days until case expires -->
+                        🚨 <!-- less than 15 days until case expires -->
                         <!--use router link maybe-->
                     </h1>
                     <small>Expedientes próximos a vencer</small>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <div class="card">
                     <h1 class="text-xl m-auto">
                         👩🏻 {{ stats.data.proceedings.female_count }}
@@ -31,7 +31,7 @@
                     <small>Expedientes <br>de mujeres</small>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <div class="card">
                     <h1 class="text-xl m-auto">
                         👨🏻 {{ stats.data.proceedings.male_count }}
@@ -39,20 +39,12 @@
                     <small>Expedientes <br>de hombres</small>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <div class="card">
                     <h1 class="text-xl m-auto">
                         🌈 {{ stats.data.proceedings.undefined_count }}
                     </h1>
                     <small>Expedientes <br>sin género</small>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card pointer animated">
-                    <h1 class="text-xl m-auto">
-                        🛰️   {{stats.data.proceedings.undefined_count}}<!--{{device infos}}-->
-                    </h1>
-                    <small>Dispositivos <br>activos</small>
                 </div>
             </div>
         </div>

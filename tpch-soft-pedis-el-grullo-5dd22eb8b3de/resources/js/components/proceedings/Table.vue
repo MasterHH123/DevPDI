@@ -17,9 +17,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr 
-                        v-for="record in proceedingsList" 
-                        :key="record.id" 
+                    <tr
+                        v-for="record in proceedingsList"
+                        :key="record.id"
                         :class="{inactive: !record.is_active}">
                         <td data-label="Folio">
                             <span class="tag">
@@ -58,36 +58,36 @@
                         </td>
                         <td data-label="*">
                             <div class="d-flex">
-                                <router-link 
+                                <router-link
                                     v-if="userHasPermissionTo('proceedings.show')"
-                                    :to="`/expedientes/${record.id}/ver`" 
-                                    tag="button" 
+                                    :to="`/expedientes/${record.id}/ver`"
+                                    tag="button"
                                     class="btn-sm">
                                     Ver
                                 </router-link>
                                 &nbsp;
-                                <button 
+                                <button
                                     v-if="record.is_active && userHasPermissionTo('proceedings.archive')"
-                                    @click.prevent="$store.dispatch('archiveProceeding', record)" 
+                                    @click.prevent="$store.dispatch('archiveProceeding', record)"
                                     class="btn-sm btn-warning">
                                     Archivar
                                 </button>
-                                <button 
+                                <button
                                     v-else-if="userHasPermissionTo('proceedings.archive')"
-                                    @click.prevent="$store.dispatch('restoreProceeding', record)" 
+                                    @click.prevent="$store.dispatch('restoreProceeding', record)"
                                     class="btn-sm btn-success">
                                     Desarchivar
                                 </button>
                                 &nbsp;
-                                <button 
+                                <button
                                     v-if="!record.is_closed && userHasPermissionTo('proceedings.close')"
-                                    @click.prevent="$store.dispatch('closeProceeding', record)" 
+                                    @click.prevent="$store.dispatch('closeProceeding', record)"
                                     class="btn-sm btn-danger">
                                     Cerrar
                                 </button>
-                                <button 
+                                <button
                                     v-else-if="userHasPermissionTo('proceedings.close')"
-                                    @click.prevent="$store.dispatch('openProceeding', record)" 
+                                    @click.prevent="$store.dispatch('openProceeding', record)"
                                     class="btn-sm btn-success">
                                     Abrir
                                 </button>
@@ -99,15 +99,15 @@
         </div>
         <div class="table-pagination">
             <div class="d-block">
-                <button 
-                    class="btn-sm btn-neutral" 
+                <button
+                    class="btn-sm btn-neutral"
                     @click="prev"
                     :disabled="!hasPrev">
                     &larr; Anterior
                 </button>
-                <button 
-                    class="btn-sm btn-neutral" 
-                    @click="next" 
+                <button
+                    class="btn-sm btn-neutral"
+                    @click="next"
                     :disabled="!hasNext">
                     Siguiente &rarr;
                 </button>

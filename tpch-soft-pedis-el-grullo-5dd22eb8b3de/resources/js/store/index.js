@@ -204,7 +204,7 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         res = res.data
                         // Data
                         state.users.list = res.data
@@ -287,7 +287,7 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         if( options.paginate == 0)
                             return state.workShifts.list = res.data
 
@@ -392,7 +392,7 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         res = res.data
                         // Data
                         state.citizens.list = res.data
@@ -490,7 +490,7 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         res = res.data
                         // Total records
                         state.proceedings.totalFiltered = r.data.total
@@ -636,7 +636,7 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         res = res.data
                         // Total records
                         state.proceedingRecords.totalFiltered = r.data.total
@@ -730,10 +730,10 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         if( options.paginate === 0 )
                             return state.proceedingTemplates.list = res.data
-                            
+
                         res = res.data
                         // Data
                         state.proceedingTemplates.list = res.data
@@ -821,10 +821,10 @@ export function stateManager(){
                 .then(r=>{
                     let res = r.data
                     if( res.success ){
-                        // 
+                        //
                         if( options.paginate === 0 )
                             return state.appLogs.list = res.data
-                            
+
                         res = res.data
                         // Data
                         state.appLogs.list = res.data
@@ -841,5 +841,5 @@ export function stateManager(){
                 .finally(()=>state.appLogs.loading = false)
             },
         }
-    })      
+    })
 }

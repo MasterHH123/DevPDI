@@ -9335,37 +9335,25 @@ var render = function render() {
     staticClass: "card bg-yellow"
   }, [_c("h1", {
     staticClass: "text-xxxxl m-auto"
-  }, [_vm._v("\n                    🗃️ " + _vm._s(_vm.stats.data.proceedings.total) + "\n                ")]), _vm._v(" "), _c("small", [_vm._v("Total de expedientes")])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-6"
-  }, [_c("div", {
-    staticClass: "card bg-red pointer animated"
-  }, [_c("h1", {
-    staticClass: "text-xxxxl m-auto"
-  }, [_vm._v("\n                    🚨 " + _vm._s(_vm.stats.data.proceedings.total))]), _vm._v(" "), _c("small", [_vm._v("Expedientes próximos a vencer")])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-3"
+  }, [_vm._v("\n                    🗃️ " + _vm._s(_vm.stats.data.proceedings.total) + "\n                ")]), _vm._v(" "), _c("small", [_vm._v("Total de expedientes")])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("h1", {
     staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    👩🏻 " + _vm._s(_vm.stats.data.proceedings.female_count) + "\n                ")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-3"
+  }, [_vm._v("\n                    👩🏻 " + _vm._s(_vm.stats.data.proceedings.female_count) + "\n                ")]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("h1", {
     staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    👨🏻 " + _vm._s(_vm.stats.data.proceedings.male_count) + "\n                ")]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-3"
+  }, [_vm._v("\n                    👨🏻 " + _vm._s(_vm.stats.data.proceedings.male_count) + "\n                ")]), _vm._v(" "), _vm._m(2)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("h1", {
     staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    🌈 " + _vm._s(_vm.stats.data.proceedings.undefined_count) + "\n                ")]), _vm._v(" "), _vm._m(2)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-3"
-  }, [_c("div", {
-    staticClass: "card pointer animated"
-  }, [_c("h1", {
-    staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    🛰️   " + _vm._s(_vm.stats.data.proceedings.undefined_count))]), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    🌈 " + _vm._s(_vm.stats.data.proceedings.undefined_count) + "\n                ")]), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _c("div", {
     staticClass: "row mt-1"
   }, [_c("div", {
     staticClass: "col-12"
@@ -9414,6 +9402,16 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-6"
+  }, [_c("div", {
+    staticClass: "card bg-red pointer animated"
+  }, [_c("h1", {
+    staticClass: "text-xxxxl m-auto"
+  }, [_vm._v("\n                    🚨 ")]), _vm._v(" "), _c("small", [_vm._v("Expedientes próximos a vencer")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
   return _c("small", [_vm._v("Expedientes "), _c("br"), _vm._v("de mujeres")]);
 }, function () {
   var _vm = this,
@@ -9423,10 +9421,6 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("small", [_vm._v("Expedientes "), _c("br"), _vm._v("sin género")]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("small", [_vm._v("Dispositivos "), _c("br"), _vm._v("activos")]);
 }];
 render._withStripped = true;
 
@@ -10336,7 +10330,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             res = res.data;
             // Data
             state.users.list = res.data;
@@ -10424,7 +10418,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             if (options.paginate == 0) return state.workShifts.list = res.data;
             res = res.data;
             // Data
@@ -10535,7 +10529,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             res = res.data;
             // Data
             state.citizens.list = res.data;
@@ -10640,7 +10634,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             res = res.data;
             // Total records
             state.proceedings.totalFiltered = r.data.total;
@@ -10772,7 +10766,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             res = res.data;
             // Total records
             state.proceedingRecords.totalFiltered = r.data.total;
@@ -10859,7 +10853,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             if (options.paginate === 0) return state.proceedingTemplates.list = res.data;
             res = res.data;
             // Data
@@ -10949,7 +10943,7 @@ function stateManager() {
         }).then(function (r) {
           var res = r.data;
           if (res.success) {
-            // 
+            //
             if (options.paginate === 0) return state.appLogs.list = res.data;
             res = res.data;
             // Data
