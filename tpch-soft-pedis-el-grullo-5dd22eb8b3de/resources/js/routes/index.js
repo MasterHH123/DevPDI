@@ -89,6 +89,16 @@ const vr = new VueRouter({
       },
     },
     {
+      path: '/expedientes/vencer',
+      name: 'expiringProceedings',
+      component: proceedingsShow,
+      meta: {
+          viewTitle: 'Expedientes a vencer pronto',
+          viewDescription: `Seguimiento y creación de capertas de investigación`,
+          permissionName: 'proceedings.show'
+      }
+    },
+    {
       path: '/expedientes/nuevo',
       name: 'proceedingAdd',
       component: proceedingsAdd,

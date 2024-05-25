@@ -279,9 +279,16 @@ class ProceedingController extends Controller
                 ])
                 ->orderBy('id', 'desc')
                 ->where(function ($query) {
-                    $query->where('description', 'like', '%TIEMPO: 60 DÍAS%')
-                        ->orWhere('description', 'like', '%TIEMPO: 30 DÍAS%')
-                        ->orWhere('description', 'like', '%TIEMPO: 15 DÍAS%');
+                    $query->where(function ($subQuery) {
+                        $subQuery->where('description', 'like', '%TIEMPO: 60 DÍAS%')
+                            ->whereDate('created_at', '>=', now()->subDays(60));
+                    })->orWhere(function ($subQuery) {
+                        $subQuery->where('description', 'like', '%TIEMPO: 30 DÍAS%')
+                            ->whereDate('created_at', '>=', now()->subDays(30));
+                    })->orWhere(function ($subQuery) {
+                        $subQuery->where('description', 'like', '%TIEMPO: 15 DÍAS%')
+                            ->whereDate('created_at', '>=', now()->subDays(15));
+                    });
                 })
                 ->when($term, function($q)use($term){
                     $q->where(function($sq)use($term){
