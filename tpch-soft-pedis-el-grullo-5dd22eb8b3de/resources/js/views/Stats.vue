@@ -15,13 +15,14 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="card bg-red pointer animated">
-                    <h1 class="text-xxxxl m-auto">
-                        🚨 <!-- less than 15 days until case expires -->
-                        <!--use router link maybe-->
-                    </h1>
-                    <small>Expedientes próximos a vencer</small>
-                </div>
+                <router-link :to="`expedientes/vencimiento`">
+                    <div class="card bg-red pointer animated">
+                        <h1 class="text-xxxxl m-auto">
+                            🚨
+                        </h1>
+                        <small style="color: black">Expedientes próximos a vencer</small>
+                    </div>
+                </router-link>
             </div>
             <div class="col-4">
                 <div class="card">

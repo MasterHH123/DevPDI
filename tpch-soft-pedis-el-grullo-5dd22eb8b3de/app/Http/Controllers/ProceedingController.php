@@ -249,81 +249,85 @@ class ProceedingController extends Controller
         ]);
     }
 
-    public function showExpiringCases(Request $request, $id)
+    public function showExpiringCases(Request $request)
     {
-        $proceeding = Proceeding::withTrashed()
-            ->with('citizen')
-            ->where('id', $id)
-            ->first();
+        if( $request->ajax() ) {
+            $paginate = $request->paginate;
+            $filters = json_decode($request->filters);
+            $pagination = json_decode($request->pagination);
+            $term = $filters->term;
 
-        $term = $request->term;
-
-        if( !$proceeding )
-            return response()->json([
-                'success'   => false,
-                'message'   => "El expediente #{$id} no existe!"
-            ], 404);
-
-        if( $request->with_proceeding_records == 1){
-
-            $logged_user = $request->user();
-
-            // Add citizen proceeding records
-            $proceeding->records = $proceeding
-                ->records()
-                ->withTrashed()
-                ->with([
-                    'citizen',
-                    'proceedingTemplate',
-                    'user'
-                ])
-                ->orderBy('id', 'desc')
-                ->where(function ($query) {
-                    $query->where(function ($subQuery) {
-                        $subQuery->where('description', 'like', '%TIEMPO: 60 DÍAS%')
-                            ->whereDate('created_at', '>=', now()->subDays(60));
-                    })->orWhere(function ($subQuery) {
-                        $subQuery->where('description', 'like', '%TIEMPO: 30 DÍAS%')
-                            ->whereDate('created_at', '>=', now()->subDays(30));
-                    })->orWhere(function ($subQuery) {
-                        $subQuery->where('description', 'like', '%TIEMPO: 15 DÍAS%')
-                            ->whereDate('created_at', '>=', now()->subDays(15));
+            $records = Proceeding::with([
+                'citizen',
+                'proceedingTemplate',
+                'user',
+            ])
+            ->orderBy('id', 'desc')
+            ->where(function ($query) {
+                $query->where(function($subQuery) {
+                    $subQuery->where('description', 'like', '%TIEMPO: 60 DÍAS%')
+                        ->whereDate('created_at', '<=', now()->subDays(60));
+                })->orWhere(function ($subQuery) {
+                    $subQuery->where('description', 'like', '%TIEMPO: 30 DÍAS%')
+                        ->whereDate('created_at', '<=', now()->subDays(30));
+                })->orWhere(function ($subQuery) {
+                    $subQuery->where('description', 'like', '%TIEMPO: 15 DÍAS%')
+                        ->whereDate('created_at', '<=', now()->subDays(15));
+                });
+            })
+            ->when($filters->citizen, function ($q) use ($filters) {
+                $q->whereHas('citizen', function ($sq) use ($filters) {
+                    $sq->where('id', $filters->citizen->id);
+                });
+            })
+                ->when(true, function ($q) use ($filters) {
+                    // Age filters
+                    $q->whereHas('citizen', function ($sq) use ($filters) {
+                        if ($filters->minAge && !$filters->maxAge)
+                            $sq->where('age', '>=', $filters->minAge);
+                        elseif (!$filters->minAge && $filters->maxAge)
+                            $sq->where('age', '<=', $filters->maxAge);
+                        elseif ($filters->minAge && $filters->maxAge)
+                            $sq->whereBetween('age', [$filters->minAge, $filters->maxAge]);
                     });
+                    // Status filters
+                    if (isset($filters->status) && $filters->status !== '')
+                        $q->where('status', $filters->status);
                 })
-                ->when($term, function($q)use($term){
-                    $q->where(function($sq)use($term){
-                        $sq->whereHas('proceedingTemplate', function($ssq)use($term){
-                            $ssq->where('name', 'like', "%{$term}%")
-                                ->orWhere('description', 'like', "%{$term}%");
-                        })
-                            ->orWhereHas('user', function($ssq)use($term){
-                                $ssq->where('first_name', 'like', "%{$term}%")
-                                    ->orWhere('last_name', 'like', "%{$term}%")
-                                    ->orWhere('second_last_name', 'like', "%{$term}%")
-                                    ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$term}%"])
-                                    ->orWhereRaw("CONCAT(first_name, ' ', last_name, ' ', second_last_name) LIKE ?", ["%{$term}%"]);
-                            });
-                    });
-                })
-                ->when(true, function($q)use($logged_user){
-
-                    if( !$logged_user->is_admin )
-                    {
-                        $q->WhereHas('proceedingTemplate', function($sq)use($logged_user){
-                            $sq->whereIn(
-                                'work_shift_id',
-                                $logged_user->workShifts->pluck('id')->toArray()
-                            );
+                ->where(function ($q) use ($term) {
+                    $q->whereHas('citizen', function ($sq) use ($term) {
+                        $sq->where(function ($ssq) use ($term) {
+                            $ssq->where('first_name', 'like', "%{$term}%")
+                                ->orWhere('last_name', 'like', "%{$term}%")
+                                ->orWhere('second_last_name', 'like', "%{$term}%")
+                                ->orWhere('phone', 'like', "%{$term}%")
+                                ->orWhere('address_street', 'like', "%{$term}%")
+                                ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$term}%"])
+                                ->orWhereRaw("CONCAT(first_name, ' ', last_name, ' ', second_last_name) LIKE ?", ["%{$term}%"]);
                         });
-                    }
+                    })
+                        ->orWhere('name', 'like', "%{$term}%")
+                        ->orWhere('description', 'like', "%{$term}%")
+                        ->orWhere('tags', 'like', "%{$term}%");
                 })
-                ->simplePaginate(10)
-                ->withQueryString();
+                ->withTrashed()
+                ->orderBy('id', 'desc');
+
+            $total_records = 0;
+
+            if ($paginate) {
+                $total_records = (clone $records)->count();
+                $records = $records->simplePaginate(15);
+            } else {
+                $records = $records->take(100)->get();
+            }
+
         }
 
         return response()->json([
             'success'   => true,
-            'data'      => $proceeding,
+            'data'      => $records,
+            'total'     => $total_records,
         ]);
     }
 

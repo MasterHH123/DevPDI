@@ -89,7 +89,7 @@ const vr = new VueRouter({
       },
     },
     {
-      path: '/expedientes/vencer',
+      path: '/expedientes/vencimiento',
       name: 'expiringProceedings',
       component: proceedingsShow,
       meta: {

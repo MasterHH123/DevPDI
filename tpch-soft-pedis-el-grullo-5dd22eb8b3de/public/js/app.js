@@ -9335,25 +9335,39 @@ var render = function render() {
     staticClass: "card bg-yellow"
   }, [_c("h1", {
     staticClass: "text-xxxxl m-auto"
-  }, [_vm._v("\n                    🗃️ " + _vm._s(_vm.stats.data.proceedings.total) + "\n                ")]), _vm._v(" "), _c("small", [_vm._v("Total de expedientes")])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    🗃️ " + _vm._s(_vm.stats.data.proceedings.total) + "\n                ")]), _vm._v(" "), _c("small", [_vm._v("Total de expedientes")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-6"
+  }, [_c("router-link", {
+    attrs: {
+      to: "expedientes/vencimiento"
+    }
+  }, [_c("div", {
+    staticClass: "card bg-red pointer animated"
+  }, [_c("h1", {
+    staticClass: "text-xxxxl m-auto"
+  }, [_vm._v("\n                        🚨\n                    ")]), _vm._v(" "), _c("small", {
+    staticStyle: {
+      color: "black"
+    }
+  }, [_vm._v("Expedientes próximos a vencer")])])])], 1), _vm._v(" "), _c("div", {
     staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("h1", {
     staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    👩🏻 " + _vm._s(_vm.stats.data.proceedings.female_count) + "\n                ")]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    👩🏻 " + _vm._s(_vm.stats.data.proceedings.female_count) + "\n                ")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
     staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("h1", {
     staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    👨🏻 " + _vm._s(_vm.stats.data.proceedings.male_count) + "\n                ")]), _vm._v(" "), _vm._m(2)])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    👨🏻 " + _vm._s(_vm.stats.data.proceedings.male_count) + "\n                ")]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
     staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("h1", {
     staticClass: "text-xl m-auto"
-  }, [_vm._v("\n                    🌈 " + _vm._s(_vm.stats.data.proceedings.undefined_count) + "\n                ")]), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    🌈 " + _vm._s(_vm.stats.data.proceedings.undefined_count) + "\n                ")]), _vm._v(" "), _vm._m(2)])])]), _vm._v(" "), _c("div", {
     staticClass: "row mt-1"
   }, [_c("div", {
     staticClass: "col-12"
@@ -9400,16 +9414,6 @@ var render = function render() {
   }, [_vm._v("\n                    👮🏻 " + _vm._s(_vm.stats.data.users.total) + "\n                ")]), _vm._v(" "), _c("small", [_vm._v("Cuentas de usuarios activos")])])])])]);
 };
 var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "col-6"
-  }, [_c("div", {
-    staticClass: "card bg-red pointer animated"
-  }, [_c("h1", {
-    staticClass: "text-xxxxl m-auto"
-  }, [_vm._v("\n                    🚨 ")]), _vm._v(" "), _c("small", [_vm._v("Expedientes próximos a vencer")])])]);
-}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("small", [_vm._v("Expedientes "), _c("br"), _vm._v("de mujeres")]);
@@ -9899,6 +9903,15 @@ var vr = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     component: _views_Proceedings_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     meta: {
       viewTitle: 'Expedientes',
+      viewDescription: "Seguimiento y creaci\xF3n de capertas de investigaci\xF3n",
+      permissionName: 'proceedings.show'
+    }
+  }, {
+    path: '/expedientes/vencimiento',
+    name: 'expiringProceedings',
+    component: _components_proceedings_Show_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    meta: {
+      viewTitle: 'Expedientes a vencer pronto',
       viewDescription: "Seguimiento y creaci\xF3n de capertas de investigaci\xF3n",
       permissionName: 'proceedings.show'
     }
