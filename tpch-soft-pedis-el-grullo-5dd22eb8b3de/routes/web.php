@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/citizens', CitizenController::class);
     Route::patch('/citizens/{id}/restore', [CitizenController::class, 'restore']);
 
+    Route::get('/proceedings/expiringCases', [ProceedingController::class, 'showExpiringCases']);
+
     Route::resource('/proceedings', ProceedingController::class);
     Route::patch('/proceedings/{id}/restore', [ProceedingController::class, 'restore']);
     Route::patch('/proceedings/{id}/open', [ProceedingController::class, 'open']);
