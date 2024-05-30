@@ -10,33 +10,15 @@
                 <div class="float-left mr-1">
                     <input
                         class=""
-                        v-model="$store.state.proceedings.filters.term"
+                        v-model="$store.state.expiringProceedings.filters.term"
                         type="search"
                         placeholder="Buscar..">
-                </div>
-
-                <div class="float-right d-flex">
-                    <router-link
-                        v-if="userHasPermissionTo('proceeding_templates.show')"
-                        to="/expedientes/formatos"
-                        tag="button"
-                        class="btn-yellow d-block">
-                        📁 Formatos
-                    </router-link>
-                    <span>&nbsp;</span>
-                    <router-link
-                        v-if="userHasPermissionTo('proceedings.store')"
-                        to="/expedientes/nuevo"
-                        tag="button"
-                        class="d-block">
-                        + Registrar
-                    </router-link>
                 </div>
             </div>
             <div class="col-6">
                 <ajax-search
-                    :selected-value="$store.state.proceedings.filters.citizen"
-                    @select="(option)=>$store.state.proceedings.filters.citizen = option"
+                    :selected-value="$store.state.expiringProceedings.filters.citizen"
+                    @select="(option)=>$store.state.expiringProceedings.filters.citizen = option"
                     :ajax-source="'/citizens'"
                     placeholder="Fitrar por ciudadano"
                     :template-fn="(citizen)=>`${citizen.first_name} ${citizen.last_name} ${citizen.second_last_name}`"
@@ -44,7 +26,7 @@
             </div>
             <div class="col-6">
                 <select
-                    v-model="$store.state.proceedings.filters.status"
+                    v-model="$store.state.expiringProceedings.filters.status"
                     class="w-100">
                     <option value="">Filtrar por estatus</option>
                     <option>Abierto</option>
@@ -58,14 +40,14 @@
                     <input
                         type="number"
                         class="w-50"
-                        v-model="$store.state.proceedings.filters.minAge"
+                        v-model="$store.state.expiringProceedings.filters.minAge"
                         placeholder="Edad mínima"
                     >
                     <span class="tag d-block m-auto">a</span>
                     <input
                         type="number"
                         class="w-50"
-                        v-model="$store.state.proceedings.filters.maxAge"
+                        v-model="$store.state.expiringProceedings.filters.maxAge"
                         placeholder="Edad máxima"
                     >
                     <span class="tag d-block m-auto">años</span>
@@ -73,7 +55,7 @@
             </div>
             <div class="col-6 text-right">
                 <h3 class="text-gray">
-                    Total: {{ $store.state.proceedings.totalFiltered }}
+                    Total: {{ $store.state.expiringProceedings.totalFiltered }}
                 </h3>
             </div>
         </dynamic-menu>
