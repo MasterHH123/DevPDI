@@ -8,6 +8,7 @@ import ProfileShow from '../components/profile/Show.vue'
 
 // Proceedings
 import proceedings from '../views/Proceedings.vue'
+import expiringProceedings from '../views/ExpiringProceedings.vue'
 import proceedingsAdd from '../components/proceedings/Add.vue'
 import proceedingsEdit from '../components/proceedings/Edit.vue'
 import proceedingsShow from '../components/proceedings/Show.vue'
@@ -91,7 +92,7 @@ const vr = new VueRouter({
     {
       path: '/expedientes/vencimiento',
       name: 'expiringProceedings',
-      component: proceedingsShow,
+      component: expiringProceedings,
       meta: {
           viewTitle: 'Expedientes a vencer pronto',
           viewDescription: `Seguimiento y creación de capertas de investigación`,

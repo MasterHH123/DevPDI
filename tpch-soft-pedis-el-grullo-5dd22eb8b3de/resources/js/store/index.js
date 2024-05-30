@@ -85,6 +85,25 @@ export function stateManager(){
                     maxAge: 100,
                 },
             },
+            expiringProceedings: {
+                loading: false,
+                list: [],
+                totalFiltered: 0,
+                pagination: {
+                    prevPageUrl: null,
+                    nextPageUrl: null,
+                    from: null,
+                    to: null,
+                    perPage: 25,
+                },
+                filters: {
+                    term: '',
+                    citizen: null,
+                    status: '',
+                    minAge: 0,
+                    maxAge: 100,
+                },
+            },
             proceedingRecords: {
                 loading: false,
                 list: [],
@@ -510,6 +529,42 @@ export function stateManager(){
             },
             getProceeding({commit, state}, options={}){
                 return axios.get( options.url || `/proceedings/${options.id}`, {
+                    params: options.params
+                })
+            },
+            getExpiringProceedings({commit, state}, url=null){
+                if( state.expiringProceedings.list.length < 1 )
+                    state.expiringProceedings.loading = true
+                axios.get( url || '/proceedings/expiringCases', {
+                    params: {
+                        filters: state.expiringProceedings.filters,
+                        pagination: state.expiringProceedings.pagination,
+                        paginate: 1,
+                    }
+                })
+                    .then(r=>{
+                        let res = r.data
+                        if( res.success ){
+                            //
+                            res = res.data
+                            // Total records
+                            state.expiringProceedings.totalFiltered = r.data.total
+                            // Data
+                            state.expiringProceedings.list = res.data
+                            // Pagination
+                            state.expiringProceedings.pagination.prevPageUrl = res.prev_page_url
+                            state.expiringProceedings.pagination.nextPageUrl = res.next_page_url
+                            state.expiringProceedings.pagination.to = res.to
+                            state.expiringProceedings.pagination.from = res.from
+                        }
+                    })
+                    .catch(err=>{
+                        window.onXHRError(err)
+                    })
+                    .finally(()=>state.expiringProceedings.loading = false)
+            },
+            getExpiringProceeding({commit, state}, options={}){
+                return axios.get( options.url || `/proceedings/expiringCases/${options.id}`, {
                     params: options.params
                 })
             },
