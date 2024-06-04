@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/proceedings/{id}/open', [ProceedingController::class, 'open']);
     Route::patch('/proceedings/{id}/close', [ProceedingController::class, 'close']);
 
+
     Route::resource('/proceeding-records', ProceedingRecordController::class);
     Route::patch('/proceeding-records/{id}/restore', [ProceedingRecordController::class, 'restore']);
 

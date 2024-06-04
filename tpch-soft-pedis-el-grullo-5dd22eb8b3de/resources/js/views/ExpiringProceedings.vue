@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <proceedings-table />
+                    <expiring-table />
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
 <script>
 import viewTitle from '../components/global/viewTitle'
 import dynamicMenu from '../components/global/DynamicMenu'
-import expiringTable from "../components/proceedings/ExpiringTable.vue"
+import expiringTable from '../components/proceedings/ExpiringTable'
 import AjaxSearch from '../components/global/AjaxSearch'
 export default {
     components: {

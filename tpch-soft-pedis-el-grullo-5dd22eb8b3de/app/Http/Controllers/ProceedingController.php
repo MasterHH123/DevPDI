@@ -258,21 +258,19 @@ class ProceedingController extends Controller
             $term = $filters->term;
 
             $records = Proceeding::with([
-                'citizen',
-                'proceedingTemplate',
-                'user',
+                'citizen'
             ])
-            ->orderBy('id', 'desc')
+            ->withCount('records')
             ->where(function ($query) {
                 $query->where(function($subQuery) {
                     $subQuery->where('description', 'like', '%TIEMPO: 60 DÍAS%')
-                        ->whereDate('created_at', '<=', now()->subDays(60));
+                        ->whereDate('created_at', '>=', now()->subDays(60));
                 })->orWhere(function ($subQuery) {
                     $subQuery->where('description', 'like', '%TIEMPO: 30 DÍAS%')
-                        ->whereDate('created_at', '<=', now()->subDays(30));
+                        ->whereDate('created_at', '>=', now()->subDays(30));
                 })->orWhere(function ($subQuery) {
                     $subQuery->where('description', 'like', '%TIEMPO: 15 DÍAS%')
-                        ->whereDate('created_at', '<=', now()->subDays(15));
+                        ->whereDate('created_at', '>=', now()->subDays(15));
                 });
             })
             ->when($filters->citizen, function ($q) use ($filters) {

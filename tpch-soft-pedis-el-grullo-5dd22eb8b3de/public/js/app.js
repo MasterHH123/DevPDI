@@ -4437,7 +4437,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_global_viewTitle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/global/viewTitle */ "./resources/js/components/global/viewTitle.vue");
 /* harmony import */ var _components_global_DynamicMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/global/DynamicMenu */ "./resources/js/components/global/DynamicMenu.vue");
-/* harmony import */ var _components_proceedings_ExpiringTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/proceedings/ExpiringTable.vue */ "./resources/js/components/proceedings/ExpiringTable.vue");
+/* harmony import */ var _components_proceedings_ExpiringTable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/proceedings/ExpiringTable */ "./resources/js/components/proceedings/ExpiringTable.vue");
 /* harmony import */ var _components_global_AjaxSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/global/AjaxSearch */ "./resources/js/components/global/AjaxSearch.vue");
 
 
@@ -4447,7 +4447,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     viewTitle: _components_global_viewTitle__WEBPACK_IMPORTED_MODULE_0__["default"],
     dynamicMenu: _components_global_DynamicMenu__WEBPACK_IMPORTED_MODULE_1__["default"],
-    expiringTable: _components_proceedings_ExpiringTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    expiringTable: _components_proceedings_ExpiringTable__WEBPACK_IMPORTED_MODULE_2__["default"],
     AjaxSearch: _components_global_AjaxSearch__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   watch: {
@@ -9448,7 +9448,7 @@ var render = function render() {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "card"
-  }, [_c("proceedings-table")], 1)])])], 1);
+  }, [_c("expiring-table")], 1)])])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -11140,6 +11140,7 @@ function stateManager() {
           }
         })["catch"](function (err) {
           window.onXHRError(err);
+          console.log('You found me!!!');
         })["finally"](function () {
           return state.expiringProceedings.loading = false;
         });

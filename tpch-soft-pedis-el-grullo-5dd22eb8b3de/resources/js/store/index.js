@@ -560,6 +560,7 @@ export function stateManager(){
                     })
                     .catch(err=>{
                         window.onXHRError(err)
+                        console.log('You found me!!!');
                     })
                     .finally(()=>state.expiringProceedings.loading = false)
             },
