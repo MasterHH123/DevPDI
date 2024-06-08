@@ -4537,7 +4537,7 @@ __webpack_require__.r(__webpack_exports__);
       function fetchLocations() {
         //testing purposes
         //CHANGE WHEN IN LOCAL
-        fetch("https://pdiseguridadtemp.com/api/locations").then(function (response) {
+        fetch("https://pdiseguridad.com/api/locations").then(function (response) {
           if (!response.ok) {
             throw new Error('There was an error');
           }
