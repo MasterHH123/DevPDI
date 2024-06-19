@@ -13,6 +13,7 @@
                     <th>Estatus</th>
                     <th>Registros</th>
                     <th>Fecha de creación</th>
+                    <th>Fecha de vencimiento</th>
                     <th>*</th>
                 </tr>
                 </thead>
@@ -54,6 +55,11 @@
                     <td data-label="Fecha">
                             <span class="tag">
                                 {{ record.readable_created_at }}
+                            </span>
+                    </td>
+                    <td data-label="Vencimiento">
+                            <span class="tag">
+                                {{ calculateExpirationDate(record.readable_created_at, record.description) }}
                             </span>
                     </td>
                     <td data-label="*">
@@ -122,6 +128,8 @@
 <script>
 import loading from '../global/Loading'
 import emptyMessage from '../global/Empty'
+import { parse, format, addDays } from 'date-fns';
+import { es } from 'date-fns/locale';
 export default {
     components: {
         loading,
@@ -154,6 +162,13 @@ export default {
         }
     },
     methods: {
+        calculateExpirationDate(createdAt, description ){
+            const creationDate = parse(createdAt, 'EEEE dd \'de\' MMMM yyyy', new Date(), { locale: es });
+            const daysMatch = description.match(/TIEMPO:\s*(\d+)\s*DÍAS/i);
+            const expirationPeriod = daysMatch ? parseInt(daysMatch[1], 10) : 0;
+            const expirationDate = addDays(creationDate, expirationPeriod);
+            return format(expirationDate, 'EEEE dd \'de\' MMMM yyyy', { locale: es });
+        },
         prev(){
             if( this.hasPrev )
                 this.$store.dispatch('getExpiringProceedings', this.pagination.prevPageUrl )

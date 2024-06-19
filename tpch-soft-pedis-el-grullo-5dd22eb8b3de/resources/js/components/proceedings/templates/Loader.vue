@@ -4,10 +4,10 @@
             <div class="m-auto pt-3 text-center">
                 <img src="/img/icons/form.svg" class="icon-xxl d-block ml-auto mr-auto">
                 <h4>
-                    {{ 
-                        hasRecordData ? 
-                        'Cargando formato...' : 
-                        'Selecciona un formato para llenar' 
+                    {{
+                        hasRecordData ?
+                        'Cargando formato...' :
+                        'Selecciona un formato para llenar'
                     }}
                 </h4>
             </div>
@@ -23,7 +23,7 @@
                 </p>
                 <small class="tag" v-if="hasRecordData">
                     {{ `Versión ${recordData.proceeding_template_tag_version}.0` }}
-                </small>    
+                </small>
                 <small v-else class="tag">
                     {{ `Versión ${templateToFill.tag_version}.0` }}
                 </small>
@@ -31,9 +31,9 @@
             <div class="citizen">
                 <h4 class="mt-auto mb-1">Ciudadano</h4>
                 <div v-if="!hasRecordData && proceeding.id">
-                    <router-link 
-                        tag="p" 
-                        :to="`/ciudadanos/${proceeding.citizen.id}/editar`" 
+                    <router-link
+                        tag="p"
+                        :to="`/ciudadanos/${proceeding.citizen.id}/editar`"
                         class="tag m-auto animated pointer no-select"
                         title="Editar"
                     >
@@ -47,7 +47,7 @@
                 </div>
                 <div v-else class="d-flex">
                     <div
-                        :style="{backgroundImage: `url(${recordData.citizen.avatar_full_path})`}" 
+                        :style="{backgroundImage: `url(${recordData.citizen.avatar_full_path})`}"
                         class="icon-bg icon-xl round-xl bg-primary-vanished d-block mt-auto mb-auto">
                     </div>
                     <div class="d-block mt-auto mb-auto ml-1">
@@ -73,8 +73,8 @@
                         :read-only="!willEdit"
                         @added="onFileAdded"
                         @removed="onFileRemoved"
-                        :empty-placeholder="willEdit ? 
-                            'Arrastra tus archivos o da click aquí para agregar' : 
+                        :empty-placeholder="willEdit ?
+                            'Arrastra tus archivos o da click aquí para agregar' :
                             'Sin archivos para mostrar'
                         "
                     />
@@ -89,9 +89,9 @@
             </div>
             <div v-if="hasRecordData" class="body read-only">
                 <h4 class="mt-auto">General</h4>
-                <form 
-                    class="form-blok" 
-                    v-if="willEdit" 
+                <form
+                    class="form-blok"
+                    v-if="willEdit"
                     @submit.prevent="updateProceedingRecord">
                     <ul class="field-list m-auto p0">
                         <li
@@ -106,18 +106,18 @@
                                     class="pointer no-select">
                                     {{ field.is_required ? '*' : ''}} {{ field.label }}
                                 </label>
-                                <input 
+                                <input
                                     v-once
                                     :value="getRecordDataFieldEntryValue(field)"
                                     :data-field-id="field.id"
                                     :name="`proceeding_template_field_ids[${field.id}]`"
-                                    :placeholder="field.placeholder" 
-                                    :type="field.input_type" 
+                                    :placeholder="field.placeholder"
+                                    :type="field.input_type"
                                     :required="field.is_required"
                                     maxlength="255"
                                 >
                             </div>
-                            <div 
+                            <div
                                 v-else-if="field.input_type == 'select'" >
                                 <label
                                     title="Editar"
@@ -140,10 +140,10 @@
                                 v-else-if="field.input_type == 'checkbox'" >
                                 <label
                                     class="label-checkbox pointer no-select">
-                                    <input 
+                                    <input
                                         v-once
-                                        type="hidden" 
-                                        value="0" 
+                                        type="hidden"
+                                        value="0"
                                         :name="`proceeding_template_field_ids[${field.id}]`"
                                     >
                                     <input
@@ -157,7 +157,7 @@
                                     >
                                     <div>
                                         <span>
-                                        {{ field.is_required ? '*' : ''}} 
+                                        {{ field.is_required ? '*' : ''}}
                                         {{ field.label }}
                                     </span>
                                     <small class="d-block text-xs text gray">
@@ -179,7 +179,7 @@
                         v-for="field in templateToFill.fields"
                         :key="field.id"
                         class="field-item">
-                        
+
                         <div v-if="getRecordDataFieldEntryValue(field) != null">
                             <div
                                 v-if="['text', 'number', 'date', 'select'].indexOf(field.input_type) !== -1 " >
@@ -197,7 +197,7 @@
                                 <label
                                     class="label-checkbox">
                                     <span>
-                                        {{ field.is_required ? '*' : ''}} 
+                                        {{ field.is_required ? '*' : ''}}
                                         {{ field.label }}
                                     </span>
                                     <span class="bool-mark" v-if="getRecordDataFieldEntryValue(field) == 1">
@@ -228,16 +228,16 @@
                                     class="pointer no-select">
                                     {{ field.is_required ? '*' : ''}} {{ field.label }}
                                 </label>
-                                <input 
+                                <input
                                     :data-field-id="field.id"
                                     :name="`proceeding_template_field_ids[${field.id}]`"
-                                    :placeholder="field.placeholder" 
-                                    :type="field.input_type" 
+                                    :placeholder="field.placeholder"
+                                    :type="field.input_type"
                                     :required="field.is_required"
                                     maxlength="255"
                                 >
                             </div>
-                            <div 
+                            <div
                                 v-else-if="field.input_type == 'select'" >
                                 <label
                                     title="Editar"
@@ -258,10 +258,10 @@
                                 v-else-if="field.input_type == 'checkbox'" >
                                 <label
                                     class="label-checkbox pointer no-select">
-                                    <input 
+                                    <input
                                         v-once
-                                        type="hidden" 
-                                        value="0" 
+                                        type="hidden"
+                                        value="0"
                                         :name="`proceeding_template_field_ids[${field.id}]`"
                                     >
                                     <input
@@ -272,7 +272,7 @@
                                         :required="field.is_required">
                                     <div>
                                         <span>
-                                        {{ field.is_required ? '*' : ''}} 
+                                        {{ field.is_required ? '*' : ''}}
                                         {{ field.label }}
                                     </span>
                                     <small class="d-block text-xs text gray">
@@ -283,8 +283,8 @@
                             </div>
                         </li>
                     </ul>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="w-auto d-block ml-auto btn-success">
                         &check; Guardar
                     </button>
@@ -293,10 +293,10 @@
             <div v-if="hasRecordData" class="tracking">
                 <h4 class="mt-auto mb-1">Registrado</h4>
                 En
-                <span class="tag"> 
+                <span class="tag">
                     {{ recordData.readable_created_at }}
                 </span>
-                por 
+                por
                 <span class="tag">
                     {{ recordData.user.first_name }}
                     {{ recordData.user.last_name }}
@@ -519,7 +519,7 @@ export default {
 
             printWindow.document.close();
             printWindow.focus();
-            
+
             printWindow.onload = ()=>{
                 printWindow.print();
                 setTimeout(()=>{
@@ -541,7 +541,7 @@ export default {
                 if( file.id )
                     return f.id != file.id
                 else
-                    return f.size != file.size && 
+                    return f.size != file.size &&
                         f.lastModified != file.lastModified
             })
         },
