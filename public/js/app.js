@@ -9790,7 +9790,7 @@ var render = function render() {
     staticStyle: {
       color: "black"
     }
-  }, [_vm._v("Expedientes próximos a vencer")])])])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("Expedientes próximos a vencer")]), _vm._v(" "), _c("small", [_vm._v("HI")])])])], 1), _vm._v(" "), _c("div", {
     staticClass: "col-4"
   }, [_c("div", {
     staticClass: "card"

@@ -21,6 +21,7 @@
                             🚨
                         </h1>
                         <small style="color: black">Expedientes próximos a vencer</small>
+                        <small>HI</small>
                     </div>
                 </router-link>
             </div>
